@@ -1,0 +1,102 @@
+/* ESTILO GENERAL */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f4f7;
+    margin: 0;
+    padding: 0;
+}
+
+/* ENCABEZADO Y PIE DE PÁGINA */
+header, footer {
+    background-color: #003366;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+/* MENÚ DE NAVEGACIÓN */
+nav {
+    background-color: #0055aa;
+    padding: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* CONTENIDO PRINCIPAL */
+main {
+    padding: 20px;
+}
+
+/* TÍTULOS */
+h1, h2, h3 {
+    color: #003366;
+}
+
+/* PÁRRAFOS */
+p {
+    font-size: 16px;
+}
+
+/* TABLA */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+table, th, td {
+    border: 1px solid #333;
+}
+
+th {
+    background-color: #dddddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+}
+
+/* FORMULARIO */
+form {
+    border: 1px solid #333;
+    padding: 15px;
+    width: 300px;
+    background-color: #ffffff;
+}
+
+input, button {
+    width: 100%;
+    padding: 6px;
+}
+
+button {
+    background-color: #0055aa;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #003366;
+}
+
+/* MULTIMEDIA */
+img, video {
+    width: 300px;
+    display: block;
+    margin-top: 10px;
+}

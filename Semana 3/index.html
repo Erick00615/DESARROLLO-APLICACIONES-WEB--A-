@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto HTML5 - Semana 3</title>
+
+    <!-- Enlace al archivo CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- ENCABEZADO -->
+    <header>
+        <h1>Proyecto HTML5 - Semana 3</h1>
+        <p>
+            <strong>Estudiante:</strong> Erick Anderson Sarchi González <br>
+            <em>Asignatura: Desarrollo de Aplicaciones Web</em>
+        </p>
+    </header>
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+    <nav>
+        <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#contenido">Contenido</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main>
+
+        <!-- SECCIÓN INICIO -->
+        <section id="inicio">
+            <h2>Introducción</h2>
+            <p>
+                Esta página web ha sido desarrollada utilizando
+                <strong>HTML5</strong> y el uso correcto de
+                <em>etiquetas semánticas</em>, cumpliendo con los
+                requerimientos establecidos en la actividad académica
+                correspondiente a la Semana 3.
+            </p>
+        </section>
+
+        <!-- SECCIÓN CONTENIDO -->
+        <section id="contenido">
+            <h2>Elementos de HTML</h2>
+
+            <!-- ARTÍCULO LISTAS -->
+            <article>
+                <h3>Listas en HTML</h3>
+
+                <p>Lista ordenada de tecnologías:</p>
+                <ol>
+                    <li>HTML5</li>
+                    <li>CSS3</li>
+                    <li>GitHub Pages</li>
+                </ol>
+
+                <p>Lista desordenada de herramientas:</p>
+                <ul>
+                    <li>Visual Studio Code</li>
+                    <li>Live Server</li>
+                    <li>Navegador Web</li>
+                </ul>
+            </article>
+
+            <!-- ARTÍCULO TABLA -->
+            <article>
+                <h3>Tabla de tecnologías utilizadas</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tecnología</th>
+                            <th>Función</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>HTML5</td>
+                            <td>Estructura del sitio web</td>
+                        </tr>
+                        <tr>
+                            <td>CSS3</td>
+                            <td>Diseño y estilos visuales</td>
+                        </tr>
+                        <tr>
+                            <td>GitHub</td>
+                            <td>Publicación del proyecto</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </article>
+
+            <!-- ARTÍCULO MULTIMEDIA -->
+            <article>
+                <h3>Contenido Multimedia</h3>
+
+                <img src="assets/img/imagen1.jpg" alt="Imagen de ejemplo del proyecto HTML5">
+
+                <video controls>
+                    <source src="assets/video/video1.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </article>
+        </section>
+
+        <!-- SECCIÓN CONTACTO -->
+        <section id="contacto">
+            <h2>Formulario de Contacto</h2>
+
+            <form>
+                <label for="nombre">Nombre:</label><br>
+                <input type="text" id="nombre" name="nombre" required><br><br>
+
+                <label for="correo">Correo electrónico:</label><br>
+                <input type="email" id="correo" name="correo" required><br><br>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA -->
+    <footer>
+        <p>
+            Visita
+            <a href="https://github.com" target="_blank">GitHub</a>
+            para más información.
+        </p>
+        <p>&copy; 2025 - Proyecto académico</p>
+    </footer>
+
+</body>
+</html>
