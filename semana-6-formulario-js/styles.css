@@ -1,0 +1,90 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(120deg, #2980b9, #6dd5fa);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Autor esquina superior */
+.autor {
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    font-size: 13px;
+    color: #ffffff;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-style: italic;
+}
+
+.container {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 360px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.campo {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 2px solid #ccc;
+    outline: none;
+}
+
+input.valido {
+    border-color: green;
+}
+
+input.invalido {
+    border-color: red;
+}
+
+.error {
+    color: red;
+    font-size: 12px;
+}
+
+.botones {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background: #ccc;
+}
+
+button[type="submit"] {
+    background: #27ae60;
+    color: white;
+}
+
+button[type="reset"] {
+    background: #e74c3c;
+    color: white;
+}
