@@ -1,10 +1,9 @@
 from flask import Flask, render_template, request, redirect
 from proyecto_TechInventory.database import crear_tablas, conectar
-from proyecto_TechInventory.models import Producto
 
 app = Flask(__name__)
 
-# Crear tabla automáticamente
+# Crear tabla automáticamente al iniciar
 crear_tablas()
 
 # =========================
@@ -20,9 +19,12 @@ def index():
 # =========================
 @app.route("/productos")
 def productos():
-    inventario = Inventario()
-    inventario.cargar_productos()
-    lista = inventario.obtener_todos()
+    conn = conectar()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM productos")
+    lista = cursor.fetchall()
+    conn.close()
+
     return render_template("productos.html", productos=lista)
 
 
@@ -60,6 +62,7 @@ def eliminar(id):
     cursor.execute("DELETE FROM productos WHERE id = ?", (id,))
     conn.commit()
     conn.close()
+
     return redirect("/productos")
 
 
@@ -95,6 +98,7 @@ def editar(id):
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
 
     
 
