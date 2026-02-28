@@ -1,14 +1,15 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TechInventory</title>
+</head>
+<body>
+    <h1>Bienvenido a TechInventory</h1>
 
-{% block content %}
-    <h2>Bienvenido al Sistema de Gestión de Inventario TechInventory</h2>
-    <p>Administra productos tecnológicos de manera eficiente.</p>
+    <a href="{{ url_for('productos') }}">Ver Productos</a>
+    <br><br>
+    <a href="{{ url_for('agregar') }}">Agregar Producto</a>
 
-    <h3>Productos de ejemplo:</h3>
-    <ul>
-        <li><a href="/producto/Laptop">Laptop</a></li>
-        <li><a href="/producto/Mouse">Mouse</a></li>
-        <li><a href="/producto/Teclado">Teclado</a></li>
-    </ul>
-{% endblock %}
+</body>
+</html>
 

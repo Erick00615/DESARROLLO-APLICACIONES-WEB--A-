@@ -1,31 +1,41 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Productos</title>
+</head>
+<body>
+    <h1>Inventario de Productos</h1>
 
-{% block content %}
-<h2>Lista de Productos</h2>
+    <a href="{{ url_for('index') }}">Inicio</a>
+    <br><br>
+    <a href="{{ url_for('agregar') }}">Agregar Nuevo Producto</a>
 
-<a href="/agregar" class="btn btn-success mb-3">Agregar Producto</a>
+    <br><br>
 
-<table class="table table-bordered">
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Cantidad</th>
-        <th>Precio</th>
-        <th>Acciones</th>
-    </tr>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Acciones</th>
+        </tr>
 
-    {% for p in productos %}
-    <tr>
-        <td>{{ p.id }}</td>
-        <td>{{ p.nombre }}</td>
-        <td>{{ p.cantidad }}</td>
-        <td>${{ p.precio }}</td>
-        <td>
-            <a href="/editar/{{ p.id }}" class="btn btn-warning btn-sm">Editar</a>
-            <a href="/eliminar/{{ p.id }}" class="btn btn-danger btn-sm">Eliminar</a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+        {% for producto in productos %}
+        <tr>
+            <td>{{ producto[0] }}</td>
+            <td>{{ producto[1] }}</td>
+            <td>{{ producto[2] }}</td>
+            <td>{{ producto[3] }}</td>
+            <td>
+                <a href="{{ url_for('editar', id=producto[0]) }}">Editar</a>
+                |
+                <a href="{{ url_for('eliminar', id=producto[0]) }}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
 
-{% endblock %}
+    </table>
+
+</body>
+</html>
