@@ -1,4 +1,4 @@
-from database import conectar
+from proyecto_TechInventory.database import conectar
 
 # ==============================
 # CLASE PRODUCTO (POO)
@@ -51,4 +51,3 @@ class Inventario:
             p for p in self.productos.values()
             if nombre.lower() in p.nombre.lower()
         ]
-        
