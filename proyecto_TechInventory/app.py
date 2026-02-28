@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
-from database import crear_tablas, conectar
-from models import Inventario
+from proyecto_TechInventory.database import crear_tablas, conectar
+from proyecto_TechInventory.models import Producto
 
 app = Flask(__name__)
 
@@ -95,6 +95,6 @@ def editar(id):
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
+
     
 
