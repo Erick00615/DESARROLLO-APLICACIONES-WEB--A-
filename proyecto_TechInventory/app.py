@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect
-from database import crear_tablas, conectar
+from proyecto_TechInventory.database import crear_tablas, conectar
 
 from inventario.inventario import (
     guardar_txt,
