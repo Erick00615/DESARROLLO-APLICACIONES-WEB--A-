@@ -1,21 +1,33 @@
+import os
 import json
 import csv
 
+# =========================
+# CREAR CARPETA SI NO EXISTE
+# =========================
+os.makedirs("inventario/data", exist_ok=True)
 
+
+# =========================
+# GUARDAR EN TXT
+# =========================
 def guardar_txt(producto):
 
-    with open("inventario/data/datos.txt", "a") as archivo:
+    with open("inventario/data/datos.txt", "a", encoding="utf-8") as archivo:
         archivo.write(
             f"{producto['nombre']},{producto['cantidad']},{producto['precio']}\n"
         )
 
 
+# =========================
+# LEER TXT
+# =========================
 def leer_txt():
 
     productos = []
 
     try:
-        with open("inventario/data/datos.txt", "r") as archivo:
+        with open("inventario/data/datos.txt", "r", encoding="utf-8") as archivo:
 
             for linea in archivo:
 
@@ -27,44 +39,58 @@ def leer_txt():
                     "precio": precio
                 })
 
-    except:
+    except Exception:
         pass
 
     return productos
 
 
+# =========================
+# GUARDAR JSON
+# =========================
 def guardar_json(producto):
 
     datos = []
 
     try:
-        with open("inventario/data/datos.json", "r") as archivo:
+        with open("inventario/data/datos.json", "r", encoding="utf-8") as archivo:
             datos = json.load(archivo)
 
-    except:
+    except Exception:
         datos = []
 
     datos.append(producto)
 
-    with open("inventario/data/datos.json", "w") as archivo:
+    with open("inventario/data/datos.json", "w", encoding="utf-8") as archivo:
         json.dump(datos, archivo, indent=4)
 
 
+# =========================
+# LEER JSON
+# =========================
 def leer_json():
 
     try:
-        with open("inventario/data/datos.json", "r") as archivo:
+        with open("inventario/data/datos.json", "r", encoding="utf-8") as archivo:
             return json.load(archivo)
 
-    except:
+    except Exception:
         return []
 
 
+# =========================
+# GUARDAR CSV
+# =========================
 def guardar_csv(producto):
 
-    with open("inventario/data/datos.csv", "a", newline="") as archivo:
+    archivo_existe = os.path.isfile("inventario/data/datos.csv")
+
+    with open("inventario/data/datos.csv", "a", newline="", encoding="utf-8") as archivo:
 
         writer = csv.writer(archivo)
+
+        if not archivo_existe:
+            writer.writerow(["nombre", "cantidad", "precio"])
 
         writer.writerow([
             producto["nombre"],
@@ -73,14 +99,19 @@ def guardar_csv(producto):
         ])
 
 
+# =========================
+# LEER CSV
+# =========================
 def leer_csv():
 
     productos = []
 
     try:
-        with open("inventario/data/datos.csv", "r") as archivo:
+        with open("inventario/data/datos.csv", "r", encoding="utf-8") as archivo:
 
             reader = csv.reader(archivo)
+
+            next(reader, None)  # saltar encabezado
 
             for fila in reader:
 
@@ -90,8 +121,9 @@ def leer_csv():
                     "precio": fila[2]
                 })
 
-    except:
+    except Exception:
         pass
 
     return productos
+
 
