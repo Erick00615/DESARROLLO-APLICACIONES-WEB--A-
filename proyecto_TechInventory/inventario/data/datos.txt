@@ -1,0 +1,3 @@
+mause,2,3
+Teclados,4,25
+Pantalla,6,800

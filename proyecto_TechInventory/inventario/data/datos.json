@@ -1,0 +1,17 @@
+[
+    {
+        "nombre": "mause",
+        "cantidad": "2",
+        "precio": "3"
+    },
+    {
+        "nombre": "Teclados",
+        "cantidad": "4",
+        "precio": "25"
+    },
+    {
+        "nombre": "Pantalla",
+        "cantidad": "6",
+        "precio": "800"
+    }
+]

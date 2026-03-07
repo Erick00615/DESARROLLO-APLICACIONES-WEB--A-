@@ -1,29 +1,59 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>TechInventory</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+<title>TechInventory</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
 </head>
+
 <body>
 
-    <header>
-        <h1>TechInventory</h1>
-        <nav>
-            <a href="/">Inicio</a>
-            <a href="/about">Acerca de</a>
-        </nav>
-        <hr>
-    </header>
+<header>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+<h1>TechInventory</h1>
 
-    <footer>
-        <hr>
-        <p>© 2026 TechInventory - Sistema de Gestión de Inventario</p>
-    </footer>
+<nav>
+
+<a href="/">Inicio</a>
+
+<a href="/productos">Productos</a>
+
+<a href="/agregar">Agregar Producto</a>
+
+<a href="/datos">Datos</a>
+
+<a href="/estadisticas">Estadísticas</a>
+
+<a href="/about">Acerca de</a>
+
+</nav>
+
+<hr>
+
+</header>
+
+
+<main>
+
+{% block content %}
+
+{% endblock %}
+
+</main>
+
+
+<footer>
+
+<hr>
+
+<p>© 2026 TechInventory - Sistema de Gestión de Inventario</p>
+
+</footer>
 
 </body>
+
 </html>
+

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="titulo">Datos almacenados en archivos</h2>
+
+<div class="contenedor-datos">
+
+<div class="card-datos">
+<h3>TXT</h3>
+<ul>
+{% for p in txt %}
+<li>{{p.nombre}} - {{p.cantidad}} - ${{p.precio}}</li>
+{% endfor %}
+</ul>
+</div>
+
+<div class="card-datos">
+<h3>JSON</h3>
+<ul>
+{% for p in json %}
+<li>{{p.nombre}} - {{p.cantidad}} - ${{p.precio}}</li>
+{% endfor %}
+</ul>
+</div>
+
+<div class="card-datos">
+<h3>CSV</h3>
+<ul>
+{% for p in csv %}
+<li>{{p.nombre}} - {{p.cantidad}} - ${{p.precio}}</li>
+{% endfor %}
+</ul>
+</div>
+
+</div>
+
+{% endblock %}

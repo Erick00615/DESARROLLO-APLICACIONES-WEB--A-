@@ -1,15 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TechInventory</title>
-</head>
-<body>
-    <h1>Bienvenido a TechInventory</h1>
+{% extends "base.html" %}
 
-    <a href="{{ url_for('productos') }}">Ver Productos</a>
-    <br><br>
-    <a href="{{ url_for('agregar') }}">Agregar Producto</a>
+{% block content %}
 
-</body>
-</html>
+<h2 style="text-align:center;">Bienvenido a TechInventory</h2>
+
+<p style="text-align:center;">
+Sistema de gestión de inventario para administrar productos tecnológicos.
+</p>
+
+<div style="display:flex; justify-content:center; gap:30px; margin-top:40px;">
+
+<a href="/productos" class="card">
+<h3>Ver Productos</h3>
+<p>Consultar el inventario completo</p>
+</a>
+
+<a href="/agregar" class="card">
+<h3>Agregar Producto</h3>
+<p>Registrar un nuevo producto</p>
+</a>
+
+<a href="/datos" class="card">
+<h3>Archivos de Datos</h3>
+<p>Visualizar TXT, JSON y CSV</p>
+</a>
+
+<a href="/estadisticas" class="card">
+<h3>Estadísticas</h3>
+<p>Resumen del inventario</p>
+</a>
+
+</div>
+
+{% endblock %}
+
 

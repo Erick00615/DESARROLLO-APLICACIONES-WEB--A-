@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2 class="titulo">Estadísticas del Inventario</h2>
+
+<div class="contenedor-datos">
+
+<div class="card-datos">
+<h3>Total Productos</h3>
+<p style="text-align:center;font-size:24px;">
+{{ total_productos }}
+</p>
+</div>
+
+<div class="card-datos">
+<h3>Cantidad Total</h3>
+<p style="text-align:center;font-size:24px;">
+{{ total_cantidad }}
+</p>
+</div>
+
+<div class="card-datos">
+<h3>Valor Inventario</h3>
+<p style="text-align:center;font-size:24px;">
+${{ valor_inventario }}
+</p>
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,4 +1,4 @@
-body {
+body { 
     font-family: Arial, sans-serif;
     background-color: #f4f6f9;
     margin: 0;
@@ -56,3 +56,54 @@ footer {
     background-color: #e5e7eb;
     margin-top: 30px;
 }
+
+
+/* ===== TARJETAS DEL MENU ===== */
+
+.card{
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.card:hover{
+    transform: scale(1.05);
+}
+
+.card h3{
+    color:#2563eb;
+}
+
+
+/* ===== CONTENEDOR TARJETAS ===== */
+
+.contenedor-datos{
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    margin-top:40px;
+}
+
+
+/* ===== TARJETAS ESTADISTICAS ===== */
+
+.card-datos{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    width:200px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.card-datos h3{
+    text-align:center;
+    color:#2563eb;
+}
+
+
