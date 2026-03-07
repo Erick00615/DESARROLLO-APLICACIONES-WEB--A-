@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
 from proyecto_TechInventory.database import crear_tablas, conectar
 
-from inventario.inventario import (
+from proyecto_TechInventory.inventario.inventario import (
     guardar_txt,
     guardar_json,
     guardar_csv,
@@ -191,6 +191,7 @@ def estadisticas():
 
 if __name__ == "__main__":
     app.run(debug=True)
+    
 
 
 
