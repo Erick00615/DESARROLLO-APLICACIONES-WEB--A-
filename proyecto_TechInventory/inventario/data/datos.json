@@ -13,5 +13,45 @@
         "nombre": "Pantalla",
         "cantidad": "6",
         "precio": "800"
+    },
+    {
+        "nombre": "Celular",
+        "cantidad": "2",
+        "precio": "1000"
+    },
+    {
+        "nombre": "Mause",
+        "cantidad": "1",
+        "precio": "30"
+    },
+    {
+        "nombre": "Mause",
+        "cantidad": "1",
+        "precio": "30"
+    },
+    {
+        "nombre": "Mause",
+        "cantidad": "1",
+        "precio": "30"
+    },
+    {
+        "nombre": "Mause",
+        "cantidad": "1",
+        "precio": "20"
+    },
+    {
+        "nombre": "Mause",
+        "cantidad": "1",
+        "precio": "30"
+    },
+    {
+        "nombre": "Mause",
+        "cantidad": "1",
+        "precio": "3"
+    },
+    {
+        "nombre": "Teclados",
+        "cantidad": "2",
+        "precio": "10"
     }
 ]

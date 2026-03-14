@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect
-from proyecto_TechInventory.database import crear_tablas, conectar
+from conexion.conexion import obtener_conexion
 
-from proyecto_TechInventory.inventario.inventario import (
+from inventario.inventario import (
     guardar_txt,
     guardar_json,
     guardar_csv,
@@ -11,8 +11,6 @@ from proyecto_TechInventory.inventario.inventario import (
 )
 
 app = Flask(__name__)
-
-crear_tablas()
 
 
 # =========================
@@ -29,7 +27,7 @@ def index():
 @app.route("/productos")
 def productos():
 
-    conn = conectar()
+    conn = obtener_conexion()
     cursor = conn.cursor()
 
     cursor.execute("SELECT * FROM productos")
@@ -59,15 +57,16 @@ def agregar():
             "precio": precio
         }
 
+        # Guardar también en archivos
         guardar_txt(producto)
         guardar_json(producto)
         guardar_csv(producto)
 
-        conn = conectar()
+        conn = obtener_conexion()
         cursor = conn.cursor()
 
         cursor.execute(
-            "INSERT INTO productos (nombre, cantidad, precio) VALUES (?, ?, ?)",
+            "INSERT INTO productos (nombre, cantidad, precio) VALUES (%s, %s, %s)",
             (nombre, cantidad, precio)
         )
 
@@ -85,11 +84,11 @@ def agregar():
 @app.route("/eliminar/<int:id>")
 def eliminar(id):
 
-    conn = conectar()
+    conn = obtener_conexion()
     cursor = conn.cursor()
 
     cursor.execute(
-        "DELETE FROM productos WHERE id = ?",
+        "DELETE FROM productos WHERE id = %s",
         (id,)
     )
 
@@ -105,7 +104,7 @@ def eliminar(id):
 @app.route("/editar/<int:id>", methods=["GET", "POST"])
 def editar(id):
 
-    conn = conectar()
+    conn = obtener_conexion()
     cursor = conn.cursor()
 
     if request.method == "POST":
@@ -116,8 +115,8 @@ def editar(id):
 
         cursor.execute("""
         UPDATE productos
-        SET nombre = ?, cantidad = ?, precio = ?
-        WHERE id = ?
+        SET nombre = %s, cantidad = %s, precio = %s
+        WHERE id = %s
         """, (nombre, cantidad, precio, id))
 
         conn.commit()
@@ -126,7 +125,7 @@ def editar(id):
         return redirect("/productos")
 
     cursor.execute(
-        "SELECT * FROM productos WHERE id = ?",
+        "SELECT * FROM productos WHERE id = %s",
         (id,)
     )
 
@@ -161,7 +160,7 @@ def datos():
 @app.route("/estadisticas")
 def estadisticas():
 
-    conn = conectar()
+    conn = obtener_conexion()
     cursor = conn.cursor()
 
     cursor.execute("SELECT COUNT(*) FROM productos")
