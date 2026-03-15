@@ -53,5 +53,10 @@
         "nombre": "Teclados",
         "cantidad": "2",
         "precio": "10"
+    },
+    {
+        "nombre": "Celular",
+        "cantidad": 2,
+        "precio": 1000.0
     }
 ]

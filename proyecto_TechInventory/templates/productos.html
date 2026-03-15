@@ -1,41 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Lista de Productos</title>
-</head>
-<body>
-    <h1>Inventario de Productos</h1>
+{% extends "base.html" %}
 
-    <a href="{{ url_for('index') }}">Inicio</a>
-    <br><br>
-    <a href="{{ url_for('agregar') }}">Agregar Nuevo Producto</a>
+{% block content %}
 
-    <br><br>
+<!-- Mensajes flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
-    <table border="1">
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Precio</th>
-            <th>Acciones</th>
-        </tr>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Productos en Inventario</h2>
 
-        {% for producto in productos %}
-        <tr>
-            <td>{{ producto[0] }}</td>
-            <td>{{ producto[1] }}</td>
-            <td>{{ producto[2] }}</td>
-            <td>{{ producto[3] }}</td>
-            <td>
-                <a href="{{ url_for('editar', id=producto[0]) }}">Editar</a>
-                |
-                <a href="{{ url_for('eliminar', id=producto[0]) }}">Eliminar</a>
-            </td>
-        </tr>
-        {% endfor %}
-
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto[0] }}</td>
+                <td>{{ producto[1] }}</td>
+                <td>{{ producto[2] }}</td>
+                <td>${{ "%.2f"|format(producto[3]) }}</td>
+                <td>
+                    <a href="{{ url_for('editar', id=producto[0]) }}" class="btn btn-sm btn-primary">Editar</a>
+                    <a href="{{ url_for('eliminar', id=producto[0]) }}" class="btn btn-sm btn-danger">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
-</body>
-</html>
+    <div class="text-center mt-3">
+        <a href="{{ url_for('agregar') }}" class="btn btn-success">Agregar Nuevo Producto</a>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Volver al Inicio</a>
+    </div>
+</div>
+
+{% endblock %}
+

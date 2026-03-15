@@ -2,36 +2,58 @@
 
 {% block content %}
 
-<h2 style="text-align:center;">Bienvenido a TechInventory</h2>
+<!-- Bloque de mensajes flash -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
 
-<p style="text-align:center;">
-Sistema de gestión de inventario para administrar productos tecnológicos.
-</p>
+<div class="container mt-5 text-center">
+    <h2>Bienvenido a TechInventory</h2>
+    <p>Sistema de gestión de inventario para administrar productos tecnológicos.</p>
 
-<div style="display:flex; justify-content:center; gap:30px; margin-top:40px;">
+    <div class="d-flex justify-content-center gap-4 mt-4 flex-wrap">
 
-<a href="/productos" class="card">
-<h3>Ver Productos</h3>
-<p>Consultar el inventario completo</p>
-</a>
+        <a href="/productos" class="card text-decoration-none text-dark" style="width: 200px;">
+            <div class="card-body">
+                <h5 class="card-title">Ver Productos</h5>
+                <p class="card-text">Consultar el inventario completo</p>
+            </div>
+        </a>
 
-<a href="/agregar" class="card">
-<h3>Agregar Producto</h3>
-<p>Registrar un nuevo producto</p>
-</a>
+        <a href="/agregar" class="card text-decoration-none text-dark" style="width: 200px;">
+            <div class="card-body">
+                <h5 class="card-title">Agregar Producto</h5>
+                <p class="card-text">Registrar un nuevo producto</p>
+            </div>
+        </a>
 
-<a href="/datos" class="card">
-<h3>Archivos de Datos</h3>
-<p>Visualizar TXT, JSON y CSV</p>
-</a>
+        <a href="/datos" class="card text-decoration-none text-dark" style="width: 200px;">
+            <div class="card-body">
+                <h5 class="card-title">Archivos de Datos</h5>
+                <p class="card-text">Visualizar TXT, JSON y CSV</p>
+            </div>
+        </a>
 
-<a href="/estadisticas" class="card">
-<h3>Estadísticas</h3>
-<p>Resumen del inventario</p>
-</a>
+        <a href="/estadisticas" class="card text-decoration-none text-dark" style="width: 200px;">
+            <div class="card-body">
+                <h5 class="card-title">Estadísticas</h5>
+                <p class="card-text">Resumen del inventario</p>
+            </div>
+        </a>
 
+    </div>
 </div>
 
 {% endblock %}
+
 
 

@@ -1,11 +1,13 @@
 import mysql.connector
+import os
 
 def obtener_conexion():
     conexion = mysql.connector.connect(
-        host="127.0.0.1",
-        user="root",
-        password="123456",
-        database="techinventory",
-        port=3307
+        host=os.environ.get("MYSQL_HOST"),
+        user=os.environ.get("MYSQL_USER"),
+        password=os.environ.get("MYSQL_PASSWORD"),
+        database=os.environ.get("MYSQL_DB"),
+        port=int(os.environ.get("MYSQL_PORT", 3306))  # 3306 por defecto
     )
     return conexion
+
