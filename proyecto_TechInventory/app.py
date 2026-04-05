@@ -29,6 +29,38 @@ app.secret_key = "supersecretkey"
 
 
 # =========================
+# CREAR TABLAS SQLITE
+# =========================
+def crear_tablas():
+    conn = obtener_conexion()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS usuarios (
+        id_usuario INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT,
+        email TEXT,
+        password TEXT
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS productos (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        nombre TEXT,
+        cantidad INTEGER,
+        precio REAL
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+
+crear_tablas()
+
+
+# =========================
 # LOGIN MANAGER
 # =========================
 login_manager = LoginManager()
@@ -143,7 +175,7 @@ def agregar():
         cursor = conn.cursor()
 
         cursor.execute(
-            "INSERT INTO productos (nombre, cantidad, precio) VALUES (%s, %s, %s)",
+            "INSERT INTO productos (nombre, cantidad, precio) VALUES (?, ?, ?)",
             (nombre, cantidad, precio)
         )
 
@@ -165,7 +197,7 @@ def eliminar(id):
     conn = obtener_conexion()
     cursor = conn.cursor()
 
-    cursor.execute("DELETE FROM productos WHERE id = %s", (id,))
+    cursor.execute("DELETE FROM productos WHERE id = ?", (id,))
 
     conn.commit()
     conn.close()
@@ -191,8 +223,8 @@ def editar(id):
 
         cursor.execute("""
         UPDATE productos
-        SET nombre = %s, cantidad = %s, precio = %s
-        WHERE id = %s
+        SET nombre = ?, cantidad = ?, precio = ?
+        WHERE id = ?
         """, (nombre, cantidad, precio, id))
 
         conn.commit()
@@ -200,7 +232,7 @@ def editar(id):
 
         return redirect("/productos")
 
-    cursor.execute("SELECT * FROM productos WHERE id = %s", (id,))
+    cursor.execute("SELECT * FROM productos WHERE id = ?", (id,))
     producto = cursor.fetchone()
 
     conn.close()
@@ -278,7 +310,7 @@ def reporte():
 # =========================
 if __name__ == "__main__":
     app.run(debug=True)
-    
+
 
     
 

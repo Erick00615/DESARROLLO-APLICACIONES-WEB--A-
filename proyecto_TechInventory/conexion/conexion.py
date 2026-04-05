@@ -1,14 +1,9 @@
-import mysql.connector
-import os
-
+import sqlite3
 
 def obtener_conexion():
-    return mysql.connector.connect(
-        host=os.getenv("MYSQL_HOST", "127.0.0.1"),
-        user=os.getenv("MYSQL_USER", "root"),
-        password=os.getenv("MYSQL_PASSWORD", "123456"),
-        database=os.getenv("MYSQL_DB", "techinventory"),
-        port=int(os.getenv("MYSQL_PORT", 3307))
-    )
+    conexion = sqlite3.connect("database.db")
+    conexion.row_factory = sqlite3.Row
+    return conexion
+
 
 
