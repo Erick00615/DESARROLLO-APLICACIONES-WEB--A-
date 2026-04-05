@@ -58,5 +58,15 @@
         "nombre": "Celular",
         "cantidad": 2,
         "precio": 1000.0
+    },
+    {
+        "nombre": "Monitor",
+        "cantidad": "5",
+        "precio": "200"
+    },
+    {
+        "nombre": "Monitor",
+        "cantidad": "5",
+        "precio": "700"
     }
 ]

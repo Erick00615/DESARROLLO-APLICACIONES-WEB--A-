@@ -1,6 +1,16 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, url_for, send_file
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from conexion.conexion import obtener_conexion
+import os
 
+# USUARIOS
+from models.usuario import (
+    obtener_usuario_por_email,
+    obtener_usuario_por_id,
+    crear_usuario
+)
+
+# INVENTARIO ARCHIVOS
 from inventario.inventario import (
     guardar_txt,
     guardar_json,
@@ -10,39 +20,111 @@ from inventario.inventario import (
     leer_csv
 )
 
+# PDF
+from services.pdf_service import generar_pdf_productos
+
+
 app = Flask(__name__)
+app.secret_key = "supersecretkey"
+
+
+# =========================
+# LOGIN MANAGER
+# =========================
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return obtener_usuario_por_id(user_id)
+
+
+# =========================
+# LOGIN
+# =========================
+@app.route("/login", methods=["GET", "POST"])
+def login():
+
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        usuario = obtener_usuario_por_email(email)
+
+        if usuario and usuario.password == password:
+            login_user(usuario)
+            return redirect("/productos")
+        else:
+            return "Credenciales incorrectas"
+
+    return render_template("auth/login.html")
+
+
+# =========================
+# REGISTER
+# =========================
+@app.route("/register", methods=["GET", "POST"])
+def register():
+
+    if request.method == "POST":
+        nombre = request.form["nombre"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        crear_usuario(nombre, email, password)
+
+        return redirect("/login")
+
+    return render_template("auth/register.html")
+
+
+# =========================
+# LOGOUT
+# =========================
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/login")
+
 
 # =========================
 # INICIO
 # =========================
 @app.route("/")
 def index():
-    return render_template("index.html")
+    return redirect("/login")
 
 
 # =========================
 # VER PRODUCTOS
 # =========================
 @app.route("/productos")
+@login_required
 def productos():
-    conn = obtener_conexion()
-    if conn is None:
-        return "Error: No se pudo conectar a la base de datos. Revisa consola."
 
+    conn = obtener_conexion()
     cursor = conn.cursor()
+
     cursor.execute("SELECT * FROM productos")
     lista = cursor.fetchall()
+
     conn.close()
 
     return render_template("productos.html", productos=lista)
 
 
 # =========================
-# AGREGAR PRODUCTO
+# AGREGAR
 # =========================
 @app.route("/agregar", methods=["GET", "POST"])
+@login_required
 def agregar():
+
     if request.method == "POST":
+
         nombre = request.form["nombre"]
         cantidad = request.form["cantidad"]
         precio = request.form["precio"]
@@ -53,28 +135,21 @@ def agregar():
             "precio": precio
         }
 
-        # Guardar también en archivos
         guardar_txt(producto)
         guardar_json(producto)
         guardar_csv(producto)
 
-        # Guardar en MySQL
         conn = obtener_conexion()
-        if conn is None:
-            return "Error: No se pudo conectar a la base de datos. Revisa consola."
         cursor = conn.cursor()
 
-        try:
-            cursor.execute(
-                "INSERT INTO productos (nombre, cantidad, precio) VALUES (%s, %s, %s)",
-                (nombre, cantidad, precio)
-            )
-            conn.commit()
-        except Exception as e:
-            conn.close()
-            return f"Error al agregar producto: {e}"
+        cursor.execute(
+            "INSERT INTO productos (nombre, cantidad, precio) VALUES (%s, %s, %s)",
+            (nombre, cantidad, precio)
+        )
 
+        conn.commit()
         conn.close()
+
         return redirect("/productos")
 
     return render_template("agregar.html")
@@ -84,23 +159,17 @@ def agregar():
 # ELIMINAR
 # =========================
 @app.route("/eliminar/<int:id>")
+@login_required
 def eliminar(id):
+
     conn = obtener_conexion()
-    if conn is None:
-        return "Error: No se pudo conectar a la base de datos. Revisa consola."
     cursor = conn.cursor()
 
-    try:
-        cursor.execute(
-            "DELETE FROM productos WHERE id = %s",
-            (id,)
-        )
-        conn.commit()
-    except Exception as e:
-        conn.close()
-        return f"Error al eliminar producto: {e}"
+    cursor.execute("DELETE FROM productos WHERE id = %s", (id,))
 
+    conn.commit()
     conn.close()
+
     return redirect("/productos")
 
 
@@ -108,46 +177,44 @@ def eliminar(id):
 # EDITAR
 # =========================
 @app.route("/editar/<int:id>", methods=["GET", "POST"])
+@login_required
 def editar(id):
+
     conn = obtener_conexion()
-    if conn is None:
-        return "Error: No se pudo conectar a la base de datos. Revisa consola."
     cursor = conn.cursor()
 
     if request.method == "POST":
+
         nombre = request.form["nombre"]
         cantidad = request.form["cantidad"]
         precio = request.form["precio"]
 
-        try:
-            cursor.execute("""
-                UPDATE productos
-                SET nombre = %s, cantidad = %s, precio = %s
-                WHERE id = %s
-            """, (nombre, cantidad, precio, id))
-            conn.commit()
-        except Exception as e:
-            conn.close()
-            return f"Error al actualizar producto: {e}"
+        cursor.execute("""
+        UPDATE productos
+        SET nombre = %s, cantidad = %s, precio = %s
+        WHERE id = %s
+        """, (nombre, cantidad, precio, id))
 
+        conn.commit()
         conn.close()
+
         return redirect("/productos")
 
-    cursor.execute(
-        "SELECT * FROM productos WHERE id = %s",
-        (id,)
-    )
+    cursor.execute("SELECT * FROM productos WHERE id = %s", (id,))
     producto = cursor.fetchone()
+
     conn.close()
 
     return render_template("editar.html", producto=producto)
 
 
 # =========================
-# DATOS DE ARCHIVOS
+# DATOS ARCHIVOS
 # =========================
 @app.route("/datos")
+@login_required
 def datos():
+
     txt = leer_txt()
     json_data = leer_json()
     csv_data = leer_csv()
@@ -164,10 +231,10 @@ def datos():
 # ESTADISTICAS
 # =========================
 @app.route("/estadisticas")
+@login_required
 def estadisticas():
+
     conn = obtener_conexion()
-    if conn is None:
-        return "Error: No se pudo conectar a la base de datos. Revisa consola."
     cursor = conn.cursor()
 
     cursor.execute("SELECT COUNT(*) FROM productos")
@@ -181,11 +248,8 @@ def estadisticas():
 
     conn.close()
 
-    if total_cantidad is None:
-        total_cantidad = 0
-
-    if valor_inventario is None:
-        valor_inventario = 0
+    total_cantidad = total_cantidad or 0
+    valor_inventario = valor_inventario or 0
 
     return render_template(
         "estadisticas.html",
@@ -195,8 +259,27 @@ def estadisticas():
     )
 
 
+# =========================
+# PDF
+# =========================
+@app.route("/reporte")
+@login_required
+def reporte():
+
+    ruta = os.path.join(os.getcwd(), "reporte_productos.pdf")
+
+    generar_pdf_productos(ruta)
+
+    return send_file(ruta, as_attachment=True)
+
+
+# =========================
+# MAIN
+# =========================
 if __name__ == "__main__":
     app.run(debug=True)
+    
+
     
 
 
